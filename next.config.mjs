@@ -2,6 +2,7 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
+  optimizePackageImports: ["@chakra-ui/react"],
 };
 
 export default nextConfig;
