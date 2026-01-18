@@ -7,13 +7,6 @@ export default function page() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
-  function handlerCustomerChange(e) {
-    const nameValue = e.target.value;
-    setName(nameValue);
-    const phoneValue = e.target.value;
-    setPhone(phoneValue);
-  }
-
   return (
     <>
       <Box
@@ -29,13 +22,15 @@ export default function page() {
           <Text textStyle="lg">Name</Text>
           <Input
             name="name"
-            onChange={handlerCustomerChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Enter your name"
           />
           <Text textStyle="lg">Phone Number</Text>
           <Input
             name="phone"
-            onChange={handlerCustomerChange}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             placeholder="Enter your Phone Number"
           />
 

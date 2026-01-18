@@ -1,17 +1,17 @@
-import Sidebar from "./dashboard-component/sidebar";
-import OrderTable from "./dashboard-component/orderTable";
-import { prisma } from "../../utils/prisma";
+import Sidebar from "../dashboard-component/sidebar";
+import OrderTable from "../dashboard-component/orderTable";
+import { prisma } from "../../../utils/prisma";
+import { Box } from "@chakra-ui/react";
+import { getOrders } from "../action/get-order";
 
 export default async function history() {
-  const orders = await prisma.order.findMany({
-    include: {
-      user: true, // relasi ke customer
-    },
-  });
+  const orders = await getOrders({ type: "completed" });
   return (
     <>
       <Sidebar />
-      <OrderTable orders={orders} />
+      <Box className="bg-white w-auto h-auto">
+        <OrderTable orders={orders} />
+      </Box>
     </>
   );
 }

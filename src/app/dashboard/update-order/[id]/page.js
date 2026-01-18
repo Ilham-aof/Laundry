@@ -1,9 +1,9 @@
 "use client";
 import { Text, Box, Stack, Input, Button } from "@chakra-ui/react";
 import { useActionState, useState } from "react";
-import { addNewOrderAction } from "./action";
+import { updateOrderAction } from "./action";
 
-export default function page() {
+export default function Page() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [weight, setWeight] = useState("");
@@ -15,7 +15,7 @@ export default function page() {
   };
 
   const [state, formAction, pending] = useActionState(
-    addNewOrderAction,
+    updateOrderAction,
     initialState,
   );
 
@@ -27,7 +27,7 @@ export default function page() {
         spaceY={7}
       >
         <Text fontWeight="bold" textStyle="4xl" textAlign="center">
-          Add New Order
+          Edit Order
         </Text>
         <Box className=" w-full h-1 bg-black"></Box>
         <Stack as="form" action={formAction}>
@@ -78,7 +78,7 @@ export default function page() {
               name === "" || phone === "" || weight === "" || price === ""
             }
           >
-            Add New Order
+            Update Order
           </Button>
         </Stack>
       </Box>

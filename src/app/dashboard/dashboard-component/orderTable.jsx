@@ -3,20 +3,21 @@ import {
   Box,
   Switch,
   Badge,
-  Button,
-  Text,
   Table,
   ButtonGroup,
   Heading,
   IconButton,
   Pagination,
   Stack,
+  Button,
+  Menu,
+  Portal,
 } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import Link from "next/link";
 import { useState } from "react";
 import { updatePaymentStatus } from "../action/update-payment";
 import { updatePickupStatus } from "../action/update-pickup";
+import Link from "next/link";
 
 export default function OrderTable({ orders }) {
   const [page, setPage] = useState(1);
@@ -35,13 +36,7 @@ export default function OrderTable({ orders }) {
   }
 
   return (
-    <Box className="bg-white w-auto h-auto">
-      <Button as={Link} href="/dashboard/new-customer">
-        Tambah Customer
-      </Button>
-      <Button as={Link} href="/dashboard/new-order">
-        make Order
-      </Button>
+    <Box>
       <Stack width="full" gap="5">
         <Heading size="xl">Orders</Heading>
         <Table.Root size="sm" variant="outline" striped>
@@ -49,7 +44,7 @@ export default function OrderTable({ orders }) {
             <Table.Row>
               <Table.ColumnHeader>Name</Table.ColumnHeader>
               <Table.ColumnHeader>Phone Number</Table.ColumnHeader>
-              <Table.ColumnHeader>Weight</Table.ColumnHeader>
+              <Table.ColumnHeader>Weight (Kg)</Table.ColumnHeader>
               <Table.ColumnHeader>Price</Table.ColumnHeader>
               <Table.ColumnHeader>Order Date</Table.ColumnHeader>
               <Table.ColumnHeader>Status Payment</Table.ColumnHeader>
@@ -74,6 +69,7 @@ export default function OrderTable({ orders }) {
                       togglePayment(order.id, order.paymentStatus)
                     }
                     colorPalette="green"
+                    disabled={order.paymentStatus && order.pickupStatus}
                   >
                     <Switch.HiddenInput />
                     <Switch.Control />
@@ -89,13 +85,42 @@ export default function OrderTable({ orders }) {
                       togglePickup(order.id, order.pickupStatus)
                     }
                     colorPalette="green"
+                    disabled={order.paymentStatus && order.pickupStatus}
                   >
                     <Switch.HiddenInput />
                     <Switch.Control />
                   </Switch.Root>
                   <Badge colorPalette={order.pickupStatus ? "green" : "red"}>
-                    {order.pickupStatus ? "Picked UP" : "Unpicked"}
+                    {order.pickupStatus ? "Picked" : "Pending"}
                   </Badge>
+                </Table.Cell>
+                <Table.Cell>
+                  <Menu.Root>
+                    <Menu.Trigger asChild>
+                      <Button variant="outline" size="sm">
+                        ...
+                      </Button>
+                    </Menu.Trigger>
+                    <Portal>
+                      <Menu.Positioner>
+                        <Menu.Content>
+                          <Menu.Item
+                            as={Link}
+                            href={`/dashboard/update-order/${order.id}`}
+                          >
+                            Edit
+                          </Menu.Item>
+                          <Menu.Item
+                            value="delete"
+                            color="fg.error"
+                            _hover={{ bg: "bg.error", color: "fg.error" }}
+                          >
+                            Delete
+                          </Menu.Item>
+                        </Menu.Content>
+                      </Menu.Positioner>
+                    </Portal>
+                  </Menu.Root>
                 </Table.Cell>
               </Table.Row>
             ))}
