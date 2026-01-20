@@ -6,8 +6,6 @@ import { useParams } from "next/navigation";
 
 export default function Page() {
   const { id } = useParams();
-  // const [name, setName] = useState("");
-  // const [phone, setPhone] = useState("");
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
 
@@ -34,20 +32,6 @@ export default function Page() {
         <Box className=" w-full h-1 bg-black"></Box>
         <Stack as="form" action={formAction}>
           <input type="hidden" name="orderId" value={id} />
-          {/* <Text textStyle="lg">Name</Text>
-          <Input
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter customer name"
-          />
-          <Text textStyle="lg">Phone Number</Text>
-          <Input
-            name="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Enter phone number"
-          /> */}
           <Text textStyle="lg">Weight</Text>
           <Input
             name="weight"
