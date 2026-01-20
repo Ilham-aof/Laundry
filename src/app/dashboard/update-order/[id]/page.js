@@ -2,10 +2,12 @@
 import { Text, Box, Stack, Input, Button } from "@chakra-ui/react";
 import { useActionState, useState } from "react";
 import { updateOrderAction } from "./action";
+import { useParams } from "next/navigation";
 
 export default function Page() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const { id } = useParams();
+  // const [name, setName] = useState("");
+  // const [phone, setPhone] = useState("");
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
 
@@ -31,7 +33,8 @@ export default function Page() {
         </Text>
         <Box className=" w-full h-1 bg-black"></Box>
         <Stack as="form" action={formAction}>
-          <Text textStyle="lg">Name</Text>
+          <input type="hidden" name="orderId" value={id} />
+          {/* <Text textStyle="lg">Name</Text>
           <Input
             name="name"
             value={name}
@@ -44,7 +47,7 @@ export default function Page() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="Enter phone number"
-          />
+          /> */}
           <Text textStyle="lg">Weight</Text>
           <Input
             name="weight"
@@ -74,9 +77,7 @@ export default function Page() {
             fontSize="lg"
             p="3"
             mt={7}
-            disabled={
-              name === "" || phone === "" || weight === "" || price === ""
-            }
+            disabled={weight === "" || price === ""}
           >
             Update Order
           </Button>

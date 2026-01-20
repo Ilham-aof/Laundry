@@ -3,11 +3,12 @@
 import { prisma } from "../../../utils/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function updatePaymentStatus(orderId, newStatus) {
+export async function updatePaymentStatus(orderId, isPaid) {
   await prisma.order.update({
     where: { id: orderId },
     data: {
-      paymentStatus: newStatus,
+      paymentStatus: isPaid,
+      paidAt: isPaid ? new Date() : null,
     },
   });
 

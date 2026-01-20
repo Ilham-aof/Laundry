@@ -2,16 +2,26 @@
 
 import { redirect } from "next/navigation";
 import { prisma } from "../../../utils/prisma";
+import { convertPhone } from "../action/convertPhone";
+
 export async function addNewOrderAction(_, formData) {
-  const name = formData.get("name");
-  const phone = formData.get("phone");
+  const rawName = formData.get("name");
+  const rawPhone = formData.get("phone");
   const weight = formData.get("weight");
   const price = formData.get("price");
 
+  if (!rawName || rawName.trim() === "") {
+    return {
+      success: false,
+      message: "Name is required",
+    };
+  }
+
+  const name = rawName.trim();
+  const phone = convertPhone(rawPhone);
+
   const user = await prisma.user.findFirst({
     where: {
-      role: "CUSTOMER",
-      name,
       phone,
     },
   });
@@ -20,6 +30,13 @@ export async function addNewOrderAction(_, formData) {
     return {
       success: false,
       message: "User not found",
+    };
+  }
+
+  if (user.name.toLowerCase() !== name.toLowerCase()) {
+    return {
+      success: false,
+      message: "Name does not match phone number",
     };
   }
 

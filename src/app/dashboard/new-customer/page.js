@@ -1,11 +1,22 @@
 "use client";
 import { Text, Box, Stack, Input, Button } from "@chakra-ui/react";
 import { addNewCustomerAction } from "./action";
-import { useState } from "react";
+import { useActionState, useState } from "react";
+import { phoneRule } from "../action/phoneRule";
 
 export default function page() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+
+  const initialState = {
+    success: null,
+    message: "",
+  };
+  const [state, formAction, pending] = useActionState(
+    addNewCustomerAction,
+    initialState,
+  );
 
   return (
     <>
@@ -18,7 +29,7 @@ export default function page() {
           Add New Customer
         </Text>
         <Box className=" w-full h-1 bg-black"></Box>
-        <Stack as="form" action={addNewCustomerAction}>
+        <Stack as="form" action={formAction}>
           <Text textStyle="lg">Name</Text>
           <Input
             name="name"
@@ -30,9 +41,25 @@ export default function page() {
           <Input
             name="phone"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              const phoneValue = e.target.value;
+              setPhone(phoneValue);
+              if (!phoneRule.test(phoneValue)) {
+                setPhoneError("Invalid Indonesian phone number");
+              } else {
+                setPhoneError("");
+              }
+            }}
             placeholder="Enter your Phone Number"
           />
+          {phoneError && (
+            <Text color="red.500" fontSize="sm">
+              {phoneError}
+            </Text>
+          )}
+          {state.success === false && (
+            <Text color="red.500">{state.message}</Text>
+          )}
 
           <Button
             type="submit"
@@ -45,7 +72,7 @@ export default function page() {
             fontSize="lg"
             p="3"
             mt={7}
-            disabled={name === "" || phone === ""}
+            disabled={name === "" || phone === "" || phoneError !== ""}
           >
             Add New Customer
           </Button>
