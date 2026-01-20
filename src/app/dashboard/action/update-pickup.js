@@ -3,11 +3,12 @@
 import { prisma } from "../../../utils/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function updatePickupStatus(orderId, newStatus) {
+export async function updatePickupStatus(orderId, isPicked) {
   await prisma.order.update({
     where: { id: orderId },
     data: {
-      pickupStatus: newStatus,
+      pickupStatus: isPicked,
+      pickedAt: isPicked ? new Date() : null,
     },
   });
 

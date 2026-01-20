@@ -17,7 +17,8 @@ export default async function layout({ children }) {
     },
   });
 
-  if (!checkSession) {
+  if (!checkSession || checkSession.expiresAt < new Date()) {
+    cookies().delete("sessionId");
     redirect("/");
   }
 

@@ -4,33 +4,49 @@ import { redirect } from "next/navigation";
 import { prisma } from "../../../../utils/prisma";
 
 export async function updateOrderAction(_, formData) {
-  const name = formData.get("name");
-  const phone = formData.get("phone");
-  const weight = formData.get("weight");
-  const price = formData.get("price");
+  const orderId = Number(formData.get("orderId"));
+  const weight = Number(formData.get("weight"));
+  const price = Number(formData.get("price"));
 
-  const user = await prisma.user.findFirst({
-    where: {
-      role: "CUSTOMER",
-      name,
-      phone,
-    },
-  });
-
-  if (!user) {
+  if (!orderId || isNaN(orderId)) {
     return {
       success: false,
-      message: "User not found",
+      message: "Invalid order ID",
     };
   }
 
-  const order = await prisma.order.update({
+  if (!weight || isNaN(weight) || weight <= 0) {
+    return {
+      success: false,
+      message: "Invalid weight",
+    };
+  }
+
+  if (!price || isNaN(price) || price <= 0) {
+    return {
+      success: false,
+      message: "Invalid price",
+    };
+  }
+
+  const order = await prisma.order.findFirst({
+    where: { id: orderId },
+  });
+
+  if (!order) {
+    return {
+      success: false,
+      message: "Order not found",
+    };
+  }
+
+  await prisma.order.update({
+    where: { id: orderId },
     data: {
-      weight: Number(weight),
-      price: Number(price),
-      userId: user.id,
+      weight,
+      price,
     },
   });
-  console.log(order);
+
   redirect("/dashboard");
 }

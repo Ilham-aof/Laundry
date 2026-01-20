@@ -17,6 +17,8 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { useState } from "react";
 import { updatePaymentStatus } from "../action/update-payment";
 import { updatePickupStatus } from "../action/update-pickup";
+import { deleteOrderAction } from "../action/delete-order";
+
 import Link from "next/link";
 
 export default function OrderTable({ orders }) {
@@ -27,12 +29,12 @@ export default function OrderTable({ orders }) {
   const end = start + pageSize;
   const paginatedOrders = orders.slice(start, end);
 
-  async function togglePayment(orderId, currentPaymentStatus) {
-    await updatePaymentStatus(orderId, !currentPaymentStatus);
+  async function togglePayment(orderId, newStatus) {
+    await updatePaymentStatus(orderId, newStatus);
   }
 
-  async function togglePickup(orderId, currentPickupStatus) {
-    await updatePickupStatus(orderId, !currentPickupStatus);
+  async function togglePickup(orderId, newStatus) {
+    await updatePickupStatus(orderId, newStatus);
   }
 
   return (
@@ -65,9 +67,7 @@ export default function OrderTable({ orders }) {
                 <Table.Cell>
                   <Switch.Root
                     checked={order.paymentStatus}
-                    onCheckedChange={() =>
-                      togglePayment(order.id, order.paymentStatus)
-                    }
+                    onCheckedChange={(e) => togglePayment(order.id, e.checked)}
                     colorPalette="green"
                     disabled={order.paymentStatus && order.pickupStatus}
                   >
@@ -81,9 +81,7 @@ export default function OrderTable({ orders }) {
                 <Table.Cell>
                   <Switch.Root
                     checked={order.pickupStatus}
-                    onCheckedChange={() =>
-                      togglePickup(order.id, order.pickupStatus)
-                    }
+                    onCheckedChange={(e) => togglePickup(order.id, e.checked)}
                     colorPalette="green"
                     disabled={order.paymentStatus && order.pickupStatus}
                   >
@@ -105,6 +103,7 @@ export default function OrderTable({ orders }) {
                       <Menu.Positioner>
                         <Menu.Content>
                           <Menu.Item
+                            value="edit"
                             as={Link}
                             href={`/dashboard/update-order/${order.id}`}
                           >
@@ -114,6 +113,15 @@ export default function OrderTable({ orders }) {
                             value="delete"
                             color="fg.error"
                             _hover={{ bg: "bg.error", color: "fg.error" }}
+                            onClick={() => {
+                              if (
+                                confirm(
+                                  "Are you sure you want to delete this order?",
+                                )
+                              ) {
+                                deleteOrderAction(order.id);
+                              }
+                            }}
                           >
                             Delete
                           </Menu.Item>
