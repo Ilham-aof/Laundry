@@ -23,7 +23,7 @@ export default async function layout({ children }) {
   }
 
   return (
-    <Box className="bg-blue-300 w-screen h-screen flex" p={10} spaceX={10}>
+    <Box className="bg-blue-300">
       <>{children}</>
     </Box>
   );

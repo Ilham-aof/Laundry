@@ -1,30 +1,32 @@
 import { passwordRule } from "./passwordRule";
 
 export function validatePassword(password) {
-  const errors = [];
+  let score = 0;
 
-  if (password.length < passwordRule.minLength) {
-    errors.push("Minimal 8 karakter");
-  }
+  if (password.length >= passwordRule.minLength) score++;
+  if (passwordRule.lowercase.test(password)) score++;
+  if (passwordRule.uppercase.test(password)) score++;
+  if (passwordRule.number.test(password)) score++;
+  if (passwordRule.special.test(password)) score++;
 
-  if (!passwordRule.lowercase.test(password)) {
-    errors.push("Harus mengandung huruf kecil");
-  }
+  let strength = "weak";
+  let progress = 0;
 
-  if (!passwordRule.uppercase.test(password)) {
-    errors.push("Harus mengandung huruf besar");
-  }
-
-  if (!passwordRule.number.test(password)) {
-    errors.push("Harus mengandung angka");
-  }
-
-  if (!passwordRule.special.test(password)) {
-    errors.push("Harus mengandung karakter spesial");
+  if (score <= 2) {
+    strength = "weak";
+    progress = 33;
+  } else if (score <= 4) {
+    strength = "medium";
+    progress = 66;
+  } else {
+    strength = "strong";
+    progress = 100;
   }
 
   return {
-    isValid: errors.length === 0,
-    errors,
+    score,
+    strength, // weak | medium | strong
+    progress, // 33 | 66 | 100
+    isValid: strength === "strong",
   };
 }

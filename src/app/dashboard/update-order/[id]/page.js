@@ -21,51 +21,53 @@ export default function Page() {
 
   return (
     <>
-      <Box
-        className="flex-col w-150 h-170 bg-white rounded-xl"
-        p="7"
-        spaceY={7}
-      >
-        <Text fontWeight="bold" textStyle="4xl" textAlign="center">
-          Edit Order
-        </Text>
-        <Box className=" w-full h-1 bg-black"></Box>
-        <Stack as="form" action={formAction}>
-          <input type="hidden" name="orderId" value={id} />
-          <Text textStyle="lg">Weight</Text>
-          <Input
-            name="weight"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            placeholder="Enter the weight (Kg)"
-          />
-          <Text textStyle="lg">Price</Text>
-          <Input
-            name="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Enter the price (Rp)"
-          />
-          {state.success === false && (
-            <Text color="red.500">{state.message}</Text>
-          )}
+      <Box className="flex items-center justify-center w-screen h-screen">
+        <Box
+          className="flex-col w-150 h-vh bg-white rounded-xl"
+          p="7"
+          spaceY={7}
+        >
+          <Text fontWeight="bold" textStyle="4xl" textAlign="center">
+            Edit Order
+          </Text>
+          <Box className=" w-full h-1 bg-black"></Box>
+          <Stack as="form" action={formAction}>
+            <input type="hidden" name="orderId" value={id} />
+            <Text textStyle="lg">Weight</Text>
+            <Input
+              name="weight"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              placeholder="Enter the weight (Kg)"
+            />
+            <Text textStyle="lg">Price</Text>
+            <Input
+              name="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Enter the price (Rp)"
+            />
+            {state.success === false && (
+              <Text color="red.500">{state.message}</Text>
+            )}
 
-          <Button
-            type="submit"
-            bg="blue.400"
-            variant="solid"
-            _hover={{
-              bg: "blue.600",
-            }}
-            fontWeight="bold"
-            fontSize="lg"
-            p="3"
-            mt={7}
-            disabled={weight === "" || price === ""}
-          >
-            Update Order
-          </Button>
-        </Stack>
+            <Button
+              type="submit"
+              bg="blue.400"
+              variant="solid"
+              _hover={{
+                bg: "blue.600",
+              }}
+              fontWeight="bold"
+              fontSize="lg"
+              p="3"
+              mt={7}
+              disabled={weight === "" || price === ""}
+            >
+              Update Order
+            </Button>
+          </Stack>
+        </Box>
       </Box>
     </>
   );
