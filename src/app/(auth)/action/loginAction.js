@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { prisma } from "../../utils/prisma";
+import { prisma } from "../../../utils/prisma";
 import { cookies } from "next/headers";
 import bcrypt from "bcrypt";
 

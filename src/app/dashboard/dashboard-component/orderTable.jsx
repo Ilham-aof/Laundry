@@ -40,7 +40,9 @@ export default function OrderTable({ orders }) {
   return (
     <Box>
       <Stack width="full" gap="5">
-        <Heading size="xl">Orders</Heading>
+        <Heading size="2xl" fontWeight="bold">
+          Orders List
+        </Heading>
         <Table.Root size="sm" variant="outline" striped>
           <Table.Header>
             <Table.Row>
@@ -51,7 +53,7 @@ export default function OrderTable({ orders }) {
               <Table.ColumnHeader>Order Date</Table.ColumnHeader>
               <Table.ColumnHeader>Status Payment</Table.ColumnHeader>
               <Table.ColumnHeader>Status Pick Up</Table.ColumnHeader>
-              <Table.ColumnHeader></Table.ColumnHeader>
+              <Table.ColumnHeader>Option</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
