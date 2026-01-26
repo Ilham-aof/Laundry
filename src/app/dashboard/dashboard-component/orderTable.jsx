@@ -104,13 +104,19 @@ export default function OrderTable({ orders }) {
                     <Portal>
                       <Menu.Positioner>
                         <Menu.Content>
-                          <Menu.Item
-                            value="edit"
-                            as={Link}
-                            href={`/dashboard/update-order/${order.id}`}
-                          >
-                            Edit
-                          </Menu.Item>
+                          {order.paymentStatus && order.pickupStatus ? (
+                            <Menu.Item value="edit" disabled>
+                              Edit
+                            </Menu.Item>
+                          ) : (
+                            <Menu.Item
+                              value="edit"
+                              as={Link}
+                              href={`/dashboard/update-order/${order.id}`}
+                            >
+                              Edit
+                            </Menu.Item>
+                          )}
                           <Menu.Item
                             value="delete"
                             color="fg.error"
