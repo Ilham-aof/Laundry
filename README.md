@@ -56,3 +56,7 @@ The order will automatically be marked as **Finished** only when both statuses a
 ## 🔑 Demo Account
 Email: budi@gmail.com  
 Password: qweqweE123#
+
+## ⚠️ Disclaimer
+All data in this project is **dummy data only** and randomly generated for demonstration purposes.
+No real customer data is used in this application.
