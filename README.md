@@ -49,7 +49,7 @@ The order will automatically be marked as **Finished** only when both statuses a
 ---
 
 ## 🌐 Live Demo
-[Visit Live Demo]([https://your-domain.vercel.app](https://laundry-management-system-indol.vercel.app))
+[Visit Live Demo]([https://your-domain.vercel.app])
 
 ---
 
