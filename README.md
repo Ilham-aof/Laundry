@@ -56,12 +56,3 @@ The order will automatically be marked as **Finished** only when both statuses a
 ## 🔑 Demo Account
 Email: budi@gmail.com  
 Password: qweqweE123#
-
----
-
-## 📦 Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/laundry-management-system.git
